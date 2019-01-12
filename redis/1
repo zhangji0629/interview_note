@@ -1,16 +1,59 @@
 问题１：redis的zset用什么实现，除了跳跃表
 
 问题2: redis容灾，备份，扩容
+    参考博客: https://www.sohu.com/a/218250453_671058
 
 问题3: 跳跃表，为什么使用跳跃表而不使用红黑树
+    参考博客: https://blog.csdn.net/u010412301/article/details/64923131
+    区间查找数据,跳表nlogn复杂度定位到区间起点，然后顺着链表向后遍历,这样更高效．　
+    跳表代码简单，可读性高，不容易出错．
+    跳表可以通过改变索引构建策略，有效的平衡执行效率和内存消耗.
+    hash表不是有序，只能做单个key查找，不适合范围查找
+    红黑树插入和删除操作可能引发子树的调整，逻辑复杂，跳表只需要修改相邻节点的指针，操作快速方便
 
 问题4: redis 基本数据结构，原理,
     参考文档:https://redisbook.readthedocs.io/en/latest/index.html
 
+    string：   int/raw/embstr   整数用int， 小字符串用embstr， 大的用raw
+    list：   ziplist/linkedlist，  ziplist 压缩链表，一次性分配一块连续的内存空间 ，数据规模小时使用过。数据规模大时使用linkedlist。
+    zset：   ziplist/hashtable   数据小时使用ziplist，数据大时使用skiplist
+    hash：   ziplist/hashtable   数据小时使用ziplist， ziplist中的哈希对象是按照key1,value1,key2,value2这样的顺序存放来存储的。数据规模大时用 hashtable
+    set：  intset/hashtable     数据小时，并且都是整数的时候，使用过intset intset实际上就是一个有序数组，其他情况使用hashtable。
+
 问题5: redis单线程好处,redis为啥快
+    参考博客: https://blog.csdn.net/chenyao1994/article/details/79491337
+    redis快的原因:
+        1.基于内存，绝大部分请求是纯粹的内存操作.
+        2.数据结构简单，对数据的操作也简单.
+        3.采用单线程，　避免不必要的上下文切换和竞争条件，不用考虑上锁释放锁，不存在死锁的问题.
+        4.使用多路IO复用，非阻塞IO.多路I/O复用模型是利用 select、poll、epoll 可以同时监察多个流的 I/O 事件的能力，在空闲的时候，会把当前线程阻塞掉，当有一个或多个流有 I/O 事件时，就从阻塞态中唤醒，于是程序就会轮询一遍所有的流（epoll 是只轮询那些真正发出了事件的流），并且只依次顺序的处理就绪的流，这种做法就避免了大量的无用操作。采用多路 I/O 复用技术可以让单个线程高效的处理多个连接请求（尽量减少网络 IO 的时间消耗），且 Redis 在内存中操作数据的速度非常快，也就是说内存内的操作不会成为影响Redis性能的瓶颈，主要由以上几点造就了 Redis 具有很高的吞吐量。
+
+    单进程单线程好处： 
+        1. 代码简单，处理逻辑简单。
+        2. 不存在加锁释放锁操作， 没有可能出现死锁导致性能消耗。
+        3. 不存在多进程或者多线程切换导致性能消耗。
 
 问题6: redis 持久化，rdb/aof
+    参考博客：https://www.cnblogs.com/likevin/p/8870339.html
+              https://www.cnblogs.com/wangfajun/p/5787077.html
+              https://segmentfault.com/a/1190000012908434
+              https://www.cnblogs.com/itdragon/p/7906481.html
 
+    RDB持久化是指在指定的时间间隔内将内存中的数据集快照写入磁盘，实际操作过程是fork一个子进程，先将数据集写入临时文件，写入成功后，再替换之前的文件，用二进制压缩存储。
+    AOF持久化以日志的形式记录服务器所处理的每一个写、删除操作，查询操作不会记录，以文本的方式记录，可以打开文件看到详细的操作记录。
+    rdb/aof 优缺点: https://www.cnblogs.com/ssssdy/p/7132856.html
+        一.RDB与AOF同时开启  默认先加载AOF的配置文件
+    　　二.相同数据集，AOF文件要远大于RDB文件，恢复速度慢于RDB
+    　　三.AOF运行效率慢于RDB,但是同步策略效率好，不同步效率和RDB相同
+    RDB与AOF的选择：
+    　　做备份：当数据量大，且对恢复速度有要求，并且数据的一致性要求不高的话，可以只使用RDB
+    　　只做缓存：不用开启任何的持久化方式
+    　　两者都开启的建议：RDB数据不实时，同时使用两者时服务器只会找AOF文件，可不可以只使用AOF?建议不要，因为RDB更适合备份数据库(AOF在不断变化，不好备份)，快速重启，而且不会又AOF可能潜在的BUG,留作万一的手段。
+
+    RDB优点: 文件紧凑，恢复速度比AOF快．最大化redis性能，fork一个子进程处理相关工作，无需父进程做任何操作.,非常适用于灾难恢复.
+        缺点:如果数据文件特别大，可能导致客户端响应暂停数毫秒，甚至数秒
+    AOF优点:更好的保障数据的一致性和完整性，
+       缺点: 生成的文件比RDB大，恢复时间长．
 redis相关面试题目: 
     https://www.cnblogs.com/Survivalist/p/8119891.html
     https://mp.weixin.qq.com/s/XJzu8yyVYZYmcOui_xXnvw

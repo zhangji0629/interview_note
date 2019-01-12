@@ -45,7 +45,7 @@
 
 问题5: go的runtime如何实现
 
-问题6: c++的map和go的map的区别（红黑树和hashtable）
+问题6: c++的map和go的map的区别,go map底层原理
 
 问题7: goroutine泄漏？ 设置timeout，select加定时器
     goroutine泄露参考博客:https://blog.csdn.net/xuduorui/article/details/53956385
@@ -70,16 +70,25 @@
 
 问题11: go为什么高并发好？
 
-问题12: 怎么理解go的interface
+问题12: 怎么理解go的interface, c++的模板跟go的interface的区别 
+    参考博客: https://blog.csdn.net/justaipanda/article/details/43155949
+              https://blog.csdn.net/i6448038/article/details/82916330
+              https://my.oschina.net/90design/blog/1633378
+              https://my.oschina.net/90design/blog/1633420
+         在Go中，接口是一组方法签名。当一个类型为接口中的所有方法提供定义时，它被称为实现该接口
+         具有0个方法的接口称为空接口。它表示为interface {}。由于空接口有0个方法，所有类型都实现了空接口。
 
-问题13: c++的模板跟go的interface的区别 
 
+ 
 问题14: C++和go对比，java和go对比
 
 问题15: go struct能不能比较
     可以比较
 问题16: go defer（for defer）
 问题17: select可以用于什么
+    参考博客: https://www.jianshu.com/p/2a1146dc42c3
+             https://blog.csdn.net/u011957758/article/details/82230316
+
 问题18: context包的用途
        参考博客:https://www.jianshu.com/p/77e4a1421cb9 
        做goroutine上下文管理，诸如有效期、终止routline树、传递请求全局变量之类的功能
@@ -89,6 +98,7 @@
 问题21: slice，len，cap，共享，扩容
 问题22: map如何顺序读取
 问题23:Go的反射包怎么找到对应的方法
+    参考博客: https://mp.weixin.qq.com/s/dmtLWZpwBNaDlGjMCC0HxQ
 问题24: sync.Pool使用原因
         参考博客:https://blog.csdn.net/bravezhe/article/details/79887514
                  https://blog.csdn.net/yimin_tank/article/details/83001512

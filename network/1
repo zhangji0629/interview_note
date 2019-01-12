@@ -1,17 +1,35 @@
-问题1: http的状态码
-问题2: tcp和udp,udp优点，适用场景
+问题1: http的状态码, 状态码401,301,302,201, 403
+    参考博客: http://tool.oschina.net/commons?type=5
+问题2: tcp和udp,udp优缺点，适用场景
+    参考博客: https://www.cnblogs.com/xiaomayizoe/p/5258754.html
+    tcp协议和udp协议的差别 
+        TCP     UDP 
+        是否连接 面向连接 面向非连接 
+        传输可靠性 可靠 不可靠 
+        应用场合 传输大量数据 少量数据 
+        速度 慢 快
 问题3: udp的头部
 问题4: http和tcp的关系
+    http超文本传输协议
 问题5: 输入url后涉及什么
 问题6: tcp怎么找到哪个套接字
 问题7: tcp三次握手,四次挥手．为啥需要三次握手，四次挥手
+    参考博客: https://blog.csdn.net/qq_38950316/article/details/81087809
 问题9: http，https
-问题10: 状态码401,301,302,201, 403
-问题11: http get跟head
+    参考博客: https://www.cnblogs.com/wqhwe/p/5407468.html
+    http 传输数据未加密，明文传输；
+    HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，要比http协议安全。
+问题11: http get/post
+    参考博客: https://blog.csdn.net/hbtj_1216/article/details/76552018
+        1. GET提交，请求的数据会附在URL之后（放在请求行中），以?分割URL和传输数据，多个参数用&连接。POST提交：把提交的数据放置在是HTTP请求报文的消息体中。
+        2. GET提交的数据会在地址栏中显示出来，而POST提交，地址栏不会改变。
+        3. GET：特定浏览器和服务器对URL长度有限制，一般是不能超过1024个字节。POST：由于不是通过URL传值，理论上数据不受限。但实际各个WEB服务器会规定对post提交数据大小进行限制。
+        4. POST的安全性要比GET的安全性高。
 问题12: http keep-alive
+    参考博客: https://www.cnblogs.com/jtlgb/p/8805319.html
 问题13: http能不能一次连接多次请求，不等后端返回
 问题14: time-wait, CloseWait原因,作用
-
+    参考博客: https://www.cnblogs.com/sunxucool/p/3449068.html
 
 计算机网络面试题目: 
     https://www.cnblogs.com/yoo2767/p/5982440.html

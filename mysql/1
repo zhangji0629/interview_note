@@ -1,13 +1,25 @@
 问题1: 什么是主键
+    参考博客: https://blog.csdn.net/shellching/article/details/77367557
+        能够区分表中每一行的, 任何两行都不具备相同的主键值，每一行数据的主键值不允许为空
 问题2: 联合索引和唯一索引
 问题3: 越多的索引越好吗？
+    太多的索引会增加存储开销, 索引对插入删除更新等操作也会增加开销, 可能会降低性能，产生负面影响
 问题4: 建立索引要注意什么？
 问题5: 数据库隔离级别，提交读会造成什么
+    参考博客: https://www.cnblogs.com/lizhonghua34/p/6187716.html
 问题6: 数据库如何建索引
 问题7: Mysql的索引有几种，时间复杂度
+    参考博客: https://www.cnblogs.com/chenhaoyu/p/8796146.html
 问题8: InnoDb是表锁还是行锁，为什么
+    参考博客: https://www.cnblogs.com/aipiaoborensheng/p/5767459.html
 问题9: 唯一索引和主键索引
+    参考博客: https://www.cnblogs.com/-619569179/p/6528896.html
+    主键是一种约束，唯一索引是一种索引
+    唯一索引可以为空值，主键不允许为空
+    一个表可以有多个唯一索引，但是只能有一个主键
+    主键可以被其他表引用做外键，但是唯一索引不可以
 问题10: B树,B_+树,B-树;
+    参考博客: https://www.cnblogs.com/kxdblog/p/4893735.html
 问题11: 左连接，右连接，内连接
 问题12: 索引原理, http://blog.codinglabs.org/articles/theory-of-mysql-index.html
 

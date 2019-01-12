@@ -7,7 +7,11 @@
 问题5: 线程的栈在哪里分配
 问题6: 多个线程读，一个线程写一个int32会不会有问题，int64呢（要看数据总线的位数，32位的话写int32没问题，int64就有问题）
 问题7: 进程和线程,协程区别
+    参考博客: https://blog.csdn.net/daaikuaichuan/article/details/82951084
+              https://blog.csdn.net/runner668/article/details/80512664
 问题8: 死锁,如何避免
+        参考博客: https://www.cnblogs.com/wuchanming/p/4345243.html
 问题9:  io模型，同步阻塞，同步非阻塞，异步
 问题10: 孤儿进程，僵尸进程
+    参考博客: https://www.cnblogs.com/idorax/p/6279664.html
 问题11: 线程通信，线程同步
