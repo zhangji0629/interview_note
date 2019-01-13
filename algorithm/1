@@ -15,5 +15,15 @@
 问题15: 大文件排序
 问题16: 设计一个可以满足高效率获取第k大和前k个大的元素的数据结构
 问题17: 链表 奇位上升偶位下降 整合成升序链表
+问题18: 多路IO复用，select/poll/epoll
+问题19: 一致性hash
+    参考博客: https://www.cnblogs.com/lpfuture/p/5796398.html
+              https://blog.csdn.net/bntX2jSQfEHy7/article/details/79549368
+              https://www.jianshu.com/p/49e3fbf41b9b
+问题20: 二叉树前序中序后序遍历相关问题
+            参考博客: https://www.cnblogs.com/heyonggang/p/3399464.html
+                      https://www.cnblogs.com/en-heng/p/6349374.html?utm_source=itdadao&utm_medium=referral
+问题21: 链表翻转
+二叉树节点最大距离
 
 

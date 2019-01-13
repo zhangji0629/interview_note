@@ -1,0 +1,456 @@
+struct MaxHeap {
+	int num[1001000];
+	int n;
+	void init() {
+		n = 0;
+	}
+
+	void ajust(int x) {
+		while(2*x <= n) {
+			int T = 2*x;
+			if(T+1 <= n && num[T+1] > num[T]) T++;
+			if(num[T] > num[x]) swap(num[T], num[x]), x = T;
+			else break;
+		}
+	}
+
+	void up() {
+		for(int i = n; i/2 >= 1; i /= 2) {
+			if(num[i/2] < num[i]) {
+				swap(num[i/2], num[i]);
+			} else break;
+		}
+	}
+
+	int get_max() {
+		if(n <= 0) return -INF;
+		return num[1];
+	}
+
+	void del() {
+		swap(num[1], num[n--]);
+		ajust(1)
+	}
+
+	void add(int x) {
+		num[++n] = x;
+		up();
+	}
+
+	void build_heap() {
+		for(int i = n/2; i >= 1; i--) {
+			ajust(i);
+		}
+	}
+};
+
+struct Node {
+	int key;
+	Node *next;
+	Node(int nkey, Node *pNext): key(nkey), next(pNext) {}
+};
+
+
+Node *MergeList(Node *head1, Node *head2) {
+	Node * tmp;
+	if(head1 == NULL) {
+		return head2;
+	}
+	if(head2 == NULL) {
+		return head1;
+	}
+
+	if(head1->val < head2->val) {
+		tmp = head1;
+		head1 = head1->next;
+	} else {
+		tmp = head2;
+		head2 = head2->next;
+	}
+	tmp->next = MergeList(head1, head2);
+	return tmp;
+}
+
+Node * MergeSort(Node * head) {
+	if(head == NULL || head->next == NULL) return head;
+	Node * r_head = head;
+	Node *head1 = head, head2 = head;
+	while(head2 != NULL && head2->next != NULL) {
+		head1 = head1->next;
+		head2 = head2->next->next;
+	}
+
+	head2 = head1->next;
+	head1->next = NULL;
+	head1 = head;
+	r_head = MergeList(MergeSort(head1), MergeSort(head2));
+	return r_head;
+}
+
+Node * GetPartion(Node *pBegin, Node *pEnd) {
+	int key = pBegin->val;
+	Node *p = pBegin;
+	Node *q = p->next;
+	while(q != pEnd) {
+		if(q->val < key) {
+			p = p->next;
+			swap(p->val, q->val);
+		}
+		q = q->next;
+	}
+	swap(pBegin->val, p->val);
+	return p;
+}
+
+void QuickSort(Node *pBegin, Node * pEnd) {
+	if(pBegin != pEnd) {
+		Node * partion = GetPartion(pBegin, pEnd);
+		QuickSort(pBegin, partion);
+		if(partion->next) {
+			QuickSort(partion->next, pEnd);
+		}
+	}
+}
+
+
+int GetMaxDistance(Node *root) {
+	if(root == NULL) {
+		return 0;
+	}
+	int max_distance = INT_MIN;
+	GetMaxDistance(root, max_distance);
+	return max_distance
+}
+
+int GetMaxDistance(Node *root, int &max_distance) {
+	if(root == NULL) return -1;
+	int left_max = GetMaxDistance(root->left, max_distance);
+	int right_max = GetMaxDistance(root->right, max_distance);
+	max_distance = max(max_distance, left_max + right_max + 2);
+	return max(left_max, right_max) + 1
+}
+
+void pre_dfs(Node *root) {
+	stack<Node *> st;
+	Node *p = root;
+	while(p || !st.empty()) {
+		while(p != NULL) {
+			print(p->val);
+			st.push(p);
+			p = p->left;
+		}
+
+		if(!st.empty()) {
+			p = st.top();
+			st.pop();
+			p = p->right;
+		}
+	}
+}
+
+void mid_dfs(Node *root) {
+		stack<Node *> st;
+	Node *p = root;
+	while(p || !st.empty()) {
+		while(p != NULL) {
+			st.push(p);
+			p = p->left;
+		}
+
+		if(!st.empty()) {
+			p = st.top();
+			print(p->val);
+			st.pop();
+			p = p->right;
+		}
+	}
+}
+
+void post_dfs(Node *root) {
+	if(root == NULL) return;
+	stack<Node *> st;
+	st.push(root);
+	Node *pre = NULL, *cur;
+	while(!st.empty()) {
+		cur = s.top();
+		if((cur->left == NULL && cur->right == NULL) ||
+			(pre != NULL &&(pre == cur->left || pre == cur->right))) {
+			print(cur->val);
+			st.pop();
+			pre = cur;
+		} else {
+			if(cur->left) st.push(cur->right);
+			if(cur->left) st.push(cur->left);
+		}
+	}
+}
+
+int a[100100];
+void qsort(int L, int R) {
+	if (R-L < 1) return;
+	int pri = a[L], i = L, j = R;
+	while(i < j) {
+		while(i<j && a[j] >= pri)j--;
+		while(i<j && a[i] <= pri) i++;
+		if(i<j) swap(a[i], a[j]);
+	}
+	swap(a[L], pri);
+	qsort(L, i-1);
+	qsort(i+1, R);
+}	
+
+int num[10000];
+void quick_sort(int left, int right) {
+	if(right -left <= 0) return;
+	stack<int> st;
+	st.push(right);
+	st.push(left);
+	while(!st.empty()) {
+		int i = st.top();
+		st.pop();
+		int j = st.top();
+		st.pop();
+		
+		int L = i, R = j, pri = num[i];
+		while(L < R) {
+			while(L < R && num[R] >= pri) R--;
+			while(L < R && num[L] <= pri) L++;
+			if(L < R) swap(num[L], num[R]);
+		}
+		num[i] = nun[L];num[L] = pri;
+
+		if(L >  i) st.push(L), st.push(i);
+		if(j > L+1) st.push(j), st.push(L+1);
+	}
+}
+
+使用额外空间归并排序
+int tmp[1001000], num[1001000];
+void merge(int left, int mid, int right) {
+	int i = left, j = mid+1, index = left;
+	while(i <= mid || j <= right) {
+		while(i <= mid && j <= right) {
+			if(num[i] <= num[j])tmp[index++] = num[i++];
+			else tmp[index++] = num[j++];
+		}
+		while(i <= mid)tmp[index++] = num[i++];
+		while(j <= right) tmp[index++] = num[j++];
+	}
+	for(i = left; i <= right; i++) num[i] = tmp[i];
+}
+
+原地归并排序
+
+void Reverse(int L, int R) {
+	for(int i = L, j = R; i < j; i++, j--) {
+		swap(num[i], num[j]);
+	}
+}
+
+void Convert(int L, int M , int R) {  // 内存块交换
+	Reverse(L, M);
+	Reverse(M+1, R);
+	Reverse(L, R);
+}
+
+void inplace_merge(int L, int M, int R) {
+	int i = L, j = M+1;
+	while(i < j && j <= R) {
+		while(i < j && num[i] <= num[j])i++;
+		int index = j;
+		while(j <= R && num[j] < num[i])j++;
+		Convert(i, index-1, j-1);
+		i += j-index;
+	}
+}
+
+
+void merge_sort(int n) {
+	for(int sz = 1; sz < n; sz += sz) {
+		for(int i = 0; i + sz < n; i += 2*sz) {
+			merge(i, i+sz-1, min(n-1, i+2*sz-1));  //或者inplace_merge
+		}
+	}
+}
+
+struct CacheNode{
+    int key;
+    int value;
+    CacheNode(int k , int v) : key(k) , value(v){}
+};
+class LRUCache{
+public:
+    LRUCache(int capacity) {
+        size = capacity;
+    }
+    
+    int get(int key) {
+        if(cacheMap.find(key) != cacheMap.end()){
+           auto it = cacheMap[key];
+           cacheList.splice(cacheList.begin() , cacheList , it);
+           cacheMap[key] = cacheList.begin();
+           return cacheList.begin()->value;
+        }else{
+            return -1;
+        }
+    }
+    
+    void set(int key, int value) {
+        if (cacheMap.find(key) == cacheMap.end()){
+            if(cacheList.size() == size){
+                cacheMap.erase(cacheList.back().key);
+                cacheList.pop_back();
+            }
+            cacheList.push_front(CacheNode(key , value));
+            cacheMap[key] = cacheList.begin();
+        }else{
+           auto it = cacheMap[key];
+           cacheList.splice(cacheList.begin() , cacheList , it);
+           cacheMap[key] = cacheList.begin();
+           cacheList.begin()->value = value;
+        }
+    }
+private:
+    int size;
+    list<CacheNode> cacheList;
+    unordered_map<int , list<CacheNode>::iterator > cacheMap;
+};
+
+// golang版本lru
+type CacheNode struct {
+	Key int
+	Value int
+}
+
+type LRUCache struct {
+	Size int
+	CacheList *list.List
+	CacheMap map[int]*list.Element
+}
+
+
+func Constructor(capacity int) LRUCache {
+	lru := LRUCache{}
+	lru.Size = capacity
+	lru.CacheList = list.New();
+	lru.CacheMap = make(map[int]*list.Element)
+	return lru
+}
+
+
+func (this *LRUCache) Get(key int) int {
+	if ele, ok := this.CacheMap[key]; !ok {
+		return -1;
+	} else {
+		this.CacheList.MoveToFront(ele);
+		this.CacheMap[key] = this.CacheList.Front();
+		return this.CacheList.Front().Value.(CacheNode).Value;
+	}
+}
+
+
+func (this *LRUCache) Put(key int, value int)  {
+	if ele, ok := this.CacheMap[key]; ok {   //已经找到
+		this.CacheList.MoveToFront(ele);
+		this.CacheMap[key] = this.CacheList.Front();
+		this.CacheList.Front().Value = CacheNode{key, value}
+	} else {
+		if this.CacheList.Len() == this.Size {
+			delete(this.CacheMap, this.CacheList.Back().Value.(CacheNode).Key)
+			this.CacheList.Remove(this.CacheList.Back())
+		}
+		this.CacheList.PushFront(CacheNode{key, value})
+		this.CacheMap[key] = this.CacheList.Front();
+	}
+}
+
+Node * invTree(Node *root) {
+	if(root == NULL) return;
+	Node *tmp = root->left;
+	root->left = invTree(root->right);
+	root->right = invTree(tmp);
+	return root;
+}
+
+Node *invTree2(Node *root) {
+	if(root == NULL) return;
+	queue<Node *> q;
+	q.push(root);
+	while(!q.empty()) {
+		Node * pNode = q.front();
+		q.pop();
+		Node *tmp = pNode->left;
+		pNode->left = pNode->right;
+		pNode->right = tmp;
+		if(pNode->left) q.push(pNode->left);
+		if(pNode->right)q.push(pNode->right);
+	}
+	return root;
+}
+
+无序数组第k大：
+int find_k(vector<int> &nums, int L, int R, int K) {
+	//int pri = L + rand()%(R-L+1);
+	//swap(nums[L], nums[pri]);
+	int m = L, count = 1;
+	for(int i = L+1; i <= R; i++) 
+		if(nums[i] > nums[L]){
+			swap(nums[i], nums[++m]);
+			count++;
+		}
+	swap(nums[m], nums[L]);
+	if(count == K) return nums[m];
+	else if(count > K) return find_k(nums, L, m, K);
+	return find_k(nums, m+1, R, K-count);
+}
+
+两个有序数组第k大：
+
+int find_kth(vector<int> &nums1,int begin1, vector<int> &nums2, int begin2, int k) {
+	int n = nums1.size();
+	int m = nums2.size();
+
+	if(n-begin1 > m-begin2) return find_kth(nums2, begin2, nums1, begin1, k);
+	if(n-begin1 <= 0) return nums2[begin2 + k-1];
+	if(k == 1) return min(nums1[begin1], nums2[begin2]);
+
+	int i = min(n-begin1, k/2) + begin1;
+	int j = min(m-begin2, k/2) + begin2;
+	if(nums1[i-1] < nums2[j-1]) return find_kth(nums1, i, nums2, begin2, k-(i-begin1));
+	else return find_kth(nums1,begin1, nums2, j, k-(j-begin2));
+
+}
+
+前序中序重建二叉树：
+class Solution {
+public:
+    TreeNode* rebuild(vector<int>& preorder, int begin1, int end1, vector<int>& inorder, int begin2, int end2) {
+        if(begin1 >= end1 || begin2 >= end2) return NULL;
+        int dis = find(inorder.begin() + begin2, inorder.begin() + end2, preorder[begin1]) - inorder.begin() - begin2;
+        TreeNode* root = new TreeNode(preorder[begin1]);
+        root->left = rebuild(preorder, begin1+1, begin1+1+dis, inorder, begin2, begin2+dis);
+        root->right = rebuild(preorder, begin1+1+dis, end1, inorder, begin2+dis+1, end2);
+        return root;
+    }
+    
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        return rebuild(preorder, 0, preorder.size(), inorder, 0, inorder.size());
+    }
+};
+
+中序后序重建二叉树：
+class Solution {
+public:
+    TreeNode* rebuild(vector<int>& inorder, int begin1, int end1, vector<int>& postorder, int begin2, int end2) {
+        if(begin1 >= end1 || begin2 >= end2) return NULL;
+        int dis = find(inorder.begin() + begin1, inorder.begin() + end1, postorder[end2-1]) - inorder.begin() - begin1;
+        TreeNode *root = new TreeNode(postorder[end2-1]);
+        root->left = rebuild(inorder, begin1, begin1+dis, postorder, begin2, begin2+dis);
+        root->right = rebuild(inorder, begin1+dis+1, end1, postorder, begin2+dis, end2-1);
+        return root;
+    }
+    
+    TreeNode* buildTree(vector<int>& inorder, vector<int>& postorder) {
+        return rebuild(inorder, 0, inorder.size(), postorder, 0, postorder.size());
+    }
+};
