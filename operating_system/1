@@ -14,4 +14,11 @@
 问题9:  io模型，同步阻塞，同步非阻塞，异步
 问题10: 孤儿进程，僵尸进程
     参考博客: https://www.cnblogs.com/idorax/p/6279664.html
-问题11: 线程通信，线程同步
+问题11: 进程通信，线程同步
+    参考博客:https://blog.csdn.net/qq_32621445/article/details/78635951
+            https://www.cnblogs.com/shugen/p/6862969.html
+            https://www.cnblogs.com/memewry/archive/2012/08/22/2651696.html
+     进程间通信有:管道，信号，消息队列，共享内存，套接字,信号量
+     线程同步：临界区，互斥量，信号量，事件．
+   
+

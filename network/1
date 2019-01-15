@@ -2,13 +2,17 @@
     参考博客: http://tool.oschina.net/commons?type=5
 问题2: tcp和udp,udp优缺点，适用场景
     参考博客: https://www.cnblogs.com/xiaomayizoe/p/5258754.html
+             https://blog.csdn.net/luman1991/article/details/52672517
+        tcp为啥比udp快: UDP没有，确认机制、重传机制、拥塞控制机制等，一个数据包发过去就不管，从这个角度上说TCP是开销大一点。
+
     tcp协议和udp协议的差别 
         TCP     UDP 
         是否连接 面向连接 面向非连接 
         传输可靠性 可靠 不可靠 
         应用场合 传输大量数据 少量数据 
         速度 慢 快
-问题3: udp的头部
+        tcp 点对点，无法广播，udp可以广播
+问题3: tcp/udp的包头
 问题4: http和tcp的关系
     http超文本传输协议
 问题5: 输入url后涉及什么
@@ -36,3 +40,4 @@
 
 计算机网络面试题目: 
     https://www.cnblogs.com/yoo2767/p/5982440.html
+

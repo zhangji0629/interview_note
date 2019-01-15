@@ -96,6 +96,7 @@
 问题20: 主协程如何等其余协程完再操作
         使用WaitGroup
 问题21: slice，len，cap，共享，扩容
+    参考博客: https://www.jianshu.com/p/030aba2bff41
 问题22: map如何顺序读取
 问题23:Go的反射包怎么找到对应的方法
     参考博客: https://mp.weixin.qq.com/s/dmtLWZpwBNaDlGjMCC0HxQ
@@ -109,3 +110,5 @@
         参考博客:https://blog.csdn.net/qq_17612199/article/details/80278632
                 https://www.cnblogs.com/diegodu/p/5606937.html
 问题27: 如何用channel实现一个令牌桶？
+问题28:  golang map 底层实现
+        参考博客: https://www.jianshu.com/p/aa0d4808cbb8
